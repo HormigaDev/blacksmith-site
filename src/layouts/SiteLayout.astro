@@ -1,0 +1,42 @@
+---
+import '../styles/site.css';
+
+interface Props {
+  lang: 'en' | 'es' | 'pt';
+  title: string;
+  description: string;
+  path: string;
+}
+
+const { lang, title, description, path } = Astro.props;
+const canonical = new URL(path, Astro.site);
+const localePaths = { en: '/', es: '/es/', pt: '/pt/' };
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#0b1118" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="alternate" hreflang="en" href={new URL(localePaths.en, Astro.site)} />
+    <link rel="alternate" hreflang="es" href={new URL(localePaths.es, Astro.site)} />
+    <link rel="alternate" hreflang="pt-BR" href={new URL(localePaths.pt, Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL('/', Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Blacksmith" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/assets/blacksmith-logo.png', Astro.site)} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

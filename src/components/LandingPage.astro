@@ -1,0 +1,179 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+interface Props {
+  lang: 'en' | 'es' | 'pt';
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const content = {
+  en: {
+    title: 'Blacksmith — Bare-metal deployments, without the platform overhead',
+    description: 'Blacksmith is a secure desktop control panel and Rust agent for deploying straightforward applications to bare-metal VPS servers.',
+    nav: ['Why Blacksmith', 'How it works', 'Security'],
+    heroKicker: 'BBEL Blacksmith',
+    heroTitle: 'Ship what you build.',
+    heroAccent: 'Keep the host yours.',
+    heroText: 'A focused deployment control panel for people who run real servers. Blacksmith turns the operating system tools already on your VPS into a clear, repeatable workflow.',
+    heroButton: 'Explore the repository',
+    heroSecondary: 'See how it works',
+    heroNote: 'For simple Python, Node.js, Rust and static applications on bare-metal Linux.',
+    signal: [['01', 'Bare metal', 'No container runtime or orchestration layer between you and the host.'], ['02', 'SSH first', 'The desktop client reaches a private agent through the SSH tunnel you already trust.'], ['03', 'Small by design', 'Rust, systemd and a narrow scope keep the operational footprint predictable.']],
+    whyKicker: 'The point',
+    whyTitle: 'A deployment panel that knows when to stay out of the way.',
+    whyText: 'Blacksmith was made for the gap between repeating deployment commands by hand and adopting a heavyweight platform. It gives a small team a dependable path from a Git branch to a running service, while leaving the machine understandable.',
+    cards: [['01', 'A useful middle ground', 'Keep your VPS, systemd units, nginx and Git workflow. Add a desktop surface for the work that is easy to get wrong when repeated manually.'], ['02', 'Built for honest constraints', 'One server, a few applications, limited resources. That is not a temporary limitation here; it is the product boundary.'], ['03', 'Operations you can inspect', 'Releases, logs, environment files, resource limits and rollback stay close to the host instead of disappearing behind an abstraction.']],
+    architectureKicker: 'Under the hood',
+    architectureTitle: 'A small system with clear edges.',
+    architectureText: 'The desktop client and server agent share typed contracts. Administration stays private; the only public surface is the signed GitHub webhook when you choose to enable it.',
+    stackTitle: 'The stack',
+    stack: [['Client', 'SvelteKit + Tauri 2'], ['Agent', 'Rust + Axum + Tokio'], ['Services', 'systemd + polkit'], ['Transport', 'OpenSSH tunnel'], ['Web', 'nginx + optional TLS'], ['Data', 'SQLite + encrypted credentials']],
+    securityTitle: 'Security is a configuration, not a slogan.',
+    securityText: 'Blacksmith is designed around least privilege, private administration, host-key verification and systemd sandboxing. It still expects an operator who understands the host: no tool can make an exposed port, an overpowered account or an unreviewed command safe.',
+    securityItems: ['SSH tunnel for administration', 'systemd service isolation', 'HMAC-signed GitHub webhooks', 'Encrypted credential storage'],
+    ctaKicker: 'Start with the source',
+    ctaTitle: 'Put your deployment workflow back on the machine you own.',
+    ctaButton: 'View Blacksmith on GitHub',
+    footer: 'Built for people who prefer a clear server to a mysterious platform.',
+    deployed: 'deployed in',
+  },
+  es: {
+    title: 'Blacksmith — Despliegues bare-metal, sin sobrecarga de plataforma',
+    description: 'Blacksmith es un panel de control de escritorio y un agente Rust para desplegar aplicaciones sencillas en servidores VPS bare-metal.',
+    nav: ['Por qué Blacksmith', 'Cómo funciona', 'Seguridad'],
+    heroKicker: 'BBEL Blacksmith',
+    heroTitle: 'Publica lo que construyes.',
+    heroAccent: 'El host sigue siendo tuyo.',
+    heroText: 'Un panel de despliegues para quienes administran servidores de verdad. Blacksmith convierte las herramientas que ya existen en tu VPS en un flujo claro y repetible.',
+    heroButton: 'Explorar el repositorio',
+    heroSecondary: 'Cómo funciona',
+    heroNote: 'Para aplicaciones Python, Node, Rust y sitios estáticos sobre Linux bare-metal.',
+    signal: [['01', 'Bare metal', 'Sin runtimes de contenedores ni capas de orquestación entre tú y el host.'], ['02', 'SSH primero', 'El cliente llega a un agente privado a través del túnel SSH en el que ya confías.'], ['03', 'Pequeño por diseño', 'Rust, systemd y un alcance preciso mantienen predecible la huella operativa.']],
+    whyKicker: 'El propósito',
+    whyTitle: 'Un panel de despliegues que sabe cuándo apartarse.',
+    whyText: 'Blacksmith nació en el espacio entre repetir comandos de despliegue a mano y adoptar una plataforma pesada. Ofrece un camino fiable desde una rama de Git hasta un servicio funcionando, sin volver opaca la máquina.',
+    cards: [['01', 'Un punto medio útil', 'Conserva tu VPS, tus unidades systemd, nginx y Git. Añade una superficie de escritorio para el trabajo que se vuelve frágil cuando se repite manualmente.'], ['02', 'Hecho para límites reales', 'Un servidor, unas pocas aplicaciones y recursos limitados. Aquí no es una limitación temporal: es el límite del producto.'], ['03', 'Operaciones inspeccionables', 'Las versiones, logs, archivos de entorno, límites y rollback permanecen cerca del host en lugar de desaparecer tras una abstracción.']],
+    architectureKicker: 'Por dentro',
+    architectureTitle: 'Un sistema pequeño con límites claros.',
+    architectureText: 'El cliente de escritorio y el agente comparten contratos tipados. La administración permanece privada; la única superficie pública es el webhook firmado de GitHub cuando decides habilitarlo.',
+    stackTitle: 'La tecnología',
+    stack: [['Cliente', 'SvelteKit + Tauri 2'], ['Agente', 'Rust + Axum + Tokio'], ['Servicios', 'systemd + polkit'], ['Transporte', 'Túnel OpenSSH'], ['Web', 'nginx + TLS opcional'], ['Datos', 'SQLite + credenciales cifradas']],
+    securityTitle: 'La seguridad es configuración, no un eslogan.',
+    securityText: 'Blacksmith está diseñado alrededor del mínimo privilegio, la administración privada, la verificación de claves del host y el aislamiento de systemd. Aun así espera un operador que entienda el host: ninguna herramienta vuelve seguro un puerto expuesto, una cuenta sobredimensionada o un comando no revisado.',
+    securityItems: ['Túnel SSH para la administración', 'Aislamiento de servicios con systemd', 'Webhooks de GitHub firmados con HMAC', 'Almacenamiento cifrado de credenciales'],
+    ctaKicker: 'Empieza por el código',
+    ctaTitle: 'Devuelve tu flujo de despliegue a la máquina que controlas.',
+    ctaButton: 'Ver Blacksmith en GitHub',
+    footer: 'Hecho para quienes prefieren un servidor claro a una plataforma misteriosa.',
+    deployed: 'desplegado en',
+  },
+  pt: {
+    title: 'Blacksmith — Deploys bare-metal, sem o peso de uma plataforma',
+    description: 'Blacksmith é um painel desktop e um agente Rust para implantar aplicações simples em servidores VPS bare-metal.',
+    nav: ['Por que Blacksmith', 'Como funciona', 'Segurança'],
+    heroKicker: 'BBEL Blacksmith',
+    heroTitle: 'Publique o que você constrói.',
+    heroAccent: 'O host continua sendo seu.',
+    heroText: 'Um painel de deploy para quem administra servidores de verdade. O Blacksmith transforma as ferramentas que já existem no seu VPS em um fluxo claro e repetível.',
+    heroButton: 'Explorar o repositório',
+    heroSecondary: 'Como funciona',
+    heroNote: 'Para aplicações Python, Node, Rust e sites estáticos em Linux bare-metal.',
+    signal: [['01', 'Bare metal', 'Sem runtimes de contêiner ou camadas de orquestração entre você e o host.'], ['02', 'SSH primeiro', 'O cliente desktop chega a um agente privado pelo túnel SSH em que você já confia.'], ['03', 'Pequeno por design', 'Rust, systemd e um escopo preciso mantêm a pegada operacional previsível.']],
+    whyKicker: 'A ideia',
+    whyTitle: 'Um painel de deploy que sabe quando sair do caminho.',
+    whyText: 'O Blacksmith nasceu no espaço entre repetir comandos de deploy à mão e adotar uma plataforma pesada. Ele oferece um caminho confiável de uma branch Git até um serviço rodando, sem tornar a máquina incompreensível.',
+    cards: [['01', 'Um meio-termo útil', 'Mantenha seu VPS, suas unidades systemd, nginx e seu fluxo Git. Adicione uma superfície desktop para o trabalho que fica frágil quando repetido manualmente.'], ['02', 'Feito para limites reais', 'Um servidor, algumas aplicações e recursos limitados. Isso não é uma limitação temporária: é o limite do produto.'], ['03', 'Operações inspecionáveis', 'Releases, logs, arquivos de ambiente, limites de recursos e rollback ficam próximos do host, não escondidos atrás de uma abstração.']],
+    architectureKicker: 'Por dentro',
+    architectureTitle: 'Um sistema pequeno com limites claros.',
+    architectureText: 'O cliente desktop e o agente compartilham contratos tipados. A administração permanece privada; a única superfície pública é o webhook assinado do GitHub quando você decide ativá-lo.',
+    stackTitle: 'A tecnologia',
+    stack: [['Cliente', 'SvelteKit + Tauri 2'], ['Agente', 'Rust + Axum + Tokio'], ['Serviços', 'systemd + polkit'], ['Transporte', 'Túnel OpenSSH'], ['Web', 'nginx + TLS opcional'], ['Dados', 'SQLite + credenciais criptografadas']],
+    securityTitle: 'Segurança é configuração, não slogan.',
+    securityText: 'O Blacksmith é projetado em torno de menor privilégio, administração privada, verificação de chaves do host e sandbox do systemd. Ainda assim, espera um operador que entenda o host: nenhuma ferramenta torna seguro um porto exposto, uma conta com privilégios excessivos ou um comando não revisado.',
+    securityItems: ['Túnel SSH para administração', 'Isolamento de serviços com systemd', 'Webhooks do GitHub assinados com HMAC', 'Armazenamento criptografado de credenciais'],
+    ctaKicker: 'Comece pelo código',
+    ctaTitle: 'Coloque seu fluxo de deploy de volta na máquina que você controla.',
+    ctaButton: 'Ver Blacksmith no GitHub',
+    footer: 'Feito para quem prefere um servidor claro a uma plataforma misteriosa.',
+    deployed: 'implantado no',
+  },
+}[lang];
+
+const languages = [['en', 'EN', '/'], ['es', 'ES', '/es/'], ['pt', 'PT', '/pt/']] as const;
+---
+<SiteLayout lang={lang} title={content.title} description={content.description} path={path}>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href={lang === 'en' ? '/' : path} aria-label="Blacksmith">
+        <img src="/assets/blacksmith-logo.png" alt="" />
+        <span>Blacksmith <small>BBEL project</small></span>
+      </a>
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#why">{content.nav[0]}</a>
+        <a href="#architecture">{content.nav[1]}</a>
+        <a href="#security">{content.nav[2]}</a>
+        <span class="language">
+          {languages.map(([code, label, href]) => <a class:active={lang === code} href={href}>{label}</a>)}
+        </span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="container hero">
+        <div>
+          <div class="eyebrow">{content.heroKicker}</div>
+          <h1>{content.heroTitle}<br /><em>{content.heroAccent}</em></h1>
+          <p class="lede">{content.heroText}</p>
+          <div class="actions">
+            <a class="button primary" href="https://github.com/HormigaDev/blacksmith" rel="noreferrer">{content.heroButton} <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="#architecture">{content.heroSecondary}</a>
+          </div>
+          <p class="hero-note">{content.heroNote}</p>
+        </div>
+        <div class="forge">
+          <img src="/assets/blacksmith-logo.png" alt="Blacksmith forge emblem" />
+        </div>
+      </section>
+
+      <section class="container signal" aria-label="Product principles">
+        {content.signal.map(([number, title, text]) => <div class="signal-item"><strong><span class="number">{number}</span> {title}</strong><span>{text}</span></div>)}
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <div class="section-heading">
+            <div><div class="eyebrow">{content.whyKicker}</div><h2>{content.whyTitle}</h2></div>
+            <p class="section-intro">{content.whyText}</p>
+          </div>
+          <div class="cards">{content.cards.map(([number, title, text]) => <article class="card"><div class="number">{number}</div><h3>{title}</h3><p>{text}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section class="section" id="architecture">
+        <div class="container">
+          <div class="section-heading">
+            <div><div class="eyebrow">{content.architectureKicker}</div><h2>{content.architectureTitle}</h2></div>
+            <p class="section-intro">{content.architectureText}</p>
+          </div>
+          <div class="architecture">
+            <div class="panel"><h3>{content.stackTitle}</h3>{content.stack.map(([label, value]) => <div class="code-line"><b>{label}</b><span>{value}</span></div>)}</div>
+            <div class="panel" id="security"><h3>{content.securityTitle}</h3><p>{content.securityText}</p><ul>{content.securityItems.map((item) => <li>{item}</li>)}</ul></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container cta">
+          <div><div class="eyebrow">{content.ctaKicker}</div><h2>{content.ctaTitle}</h2></div>
+          <a class="button primary" href="https://github.com/HormigaDev/blacksmith" rel="noreferrer">{content.ctaButton} <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container footer">
+      <span>{content.footer}</span>
+      <span class="author"><a href="https://github.com/HormigaDev" aria-label="HormigaDev on GitHub" rel="noreferrer"><img src="/assets/hormigadev.png" alt="HormigaDev" loading="lazy" /></a><span>{content.deployed} <a class="repo-link" href="https://github.com/HormigaDev/blacksmith" rel="noreferrer">Blacksmith ↗</a></span></span>
+    </footer>
+  </div>
+</SiteLayout>
