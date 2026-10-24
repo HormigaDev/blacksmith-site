@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://blacksmith.bbel.dev/</loc></url>
-  <url><loc>https://blacksmith.bbel.dev/es/</loc></url>
-  <url><loc>https://blacksmith.bbel.dev/pt/</loc></url>
+  <url>
+    <loc>https://blacksmith.hormiga.dev/</loc>
+  </url>
+  <url>
+    <loc>https://blacksmith.hormiga.dev/es/</loc>
+  </url>
+  <url>
+    <loc>https://blacksmith.hormiga.dev/pt/</loc>
+  </url>
 </urlset>

@@ -1,4 +1,4 @@
-# BBEL Blacksmith presentation site
+# Blacksmith presentation site
 
 The public, multilingual presentation site for Blacksmith. It introduces the project, its
 bare-metal deployment scope, architecture, and security model in English, Spanish, and

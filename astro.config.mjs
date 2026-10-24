@@ -1,7 +1,7 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
 export default defineConfig({
-  site: 'https://blacksmith.bbel.dev',
-  output: 'static',
-  trailingSlash: 'always',
+    site: "https://blacksmith.hormiga.dev",
+    output: "static",
+    trailingSlash: "always",
 });
